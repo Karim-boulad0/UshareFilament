@@ -26,7 +26,10 @@ class CycleBundleResource extends Resource
     protected static ?string $model = CycleBundle::class;
     protected static ?string $navigationIcon = 'heroicon-o-collection';
     protected static ?string $navigationGroup = 'Subscriptions';
-
+    public static function middleware()
+    {
+        return redirect()->intended('login');
+    }
 
     // public static function getEloquentQuery(): Builder
     // {

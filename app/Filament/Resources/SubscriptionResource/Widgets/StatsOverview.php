@@ -1,8 +1,11 @@
 <?php
 
+
+
 namespace App\Filament\Resources\SubscriptionResource\Widgets;
 
 use App\Models\Subscription;
+use Filament\Forms\Components\Select;
 use Filament\Resources\Form;
 use Illuminate\Support\Facades\DB;
 use Filament\Widgets\StatsOverviewWidget\Card;
@@ -14,12 +17,15 @@ class StatsOverview extends BaseWidget
 
     protected function getCards(): array
     {
-        if (!auth()->user()->hasRole('super-admin')) {
+
+
+        if (auth()->user()->hasRole('super-admin')) {
             $f = auth()->user();
-            return [
+            $cards = [
                 Card::make('Approved subscriptions', Subscription::whereIn('cycle_id', function ($query) {
                     $query->select('id')->from('cycles')->where('end_date', '>=', now());
                 })->where('is_approve', 1)->where('user_id', auth()->user()->id)->count()),
+
                 Card::make("cost price for  : $f->name", function () {
                     $users = DB::table('subscriptions')
                         ->join('bundles', 'subscriptions.bundle_id', '=', 'bundles.id')
@@ -36,6 +42,8 @@ class StatsOverview extends BaseWidget
                     return number_format(floatval($cleanString));
                 }),
             ];
+
+            return $cards;
         } else {
             return [
                 Card::make(' Approved Subscriptions', Subscription::whereIn('cycle_id', function ($query) {

@@ -18,7 +18,8 @@ class RolesAndPermissionsSeeder extends Seeder
      *
      * @return void
      */
-    public function run() {
+    public function run()
+    {
         // reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
@@ -61,7 +62,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $userRole = Role::create(['name' => 'user'])->syncPermissions([
             $miscPermission,
         ]);
-
+        $showArchiveRole = Role::create(['name' => 'show-archive']);
         $superAdminRole = Role::create(['name' => 'super-admin'])->syncPermissions([
             $userPermission0,
             $userPermission1,
@@ -108,11 +109,11 @@ class RolesAndPermissionsSeeder extends Seeder
         User::create([
             'name' => 'super admin',
             'email' => 'super@gmail.com',
-            'is_admin' =>1,
+            'is_admin' => 1,
             'email_verified_at' => now(),
-            'password' => Hash::make('password'),
+            'password' => Hash::make('super123$%'),
             'remember_token' => Str::random(10),
-            'admin_create'=>0
+            'admin_create' => 0
         ])->assignRole($superAdminRole);
 
         User::create([
@@ -121,8 +122,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('admin123$%'),
             'remember_token' => Str::random(10),
-            'is_admin'=>1,
-            'admin_create'=>1
+            'is_admin' => 1,
+            'admin_create' => 1
 
         ])->assignRole($adminRole);
 
