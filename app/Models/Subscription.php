@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Subscription extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
-    protected $fillable = ['cycle_id', 'deleted_at', 'bundle_id', 'user_id', 'phone_number', 'verification_code', 'note', 'is_approve', 'is_karim', 'is_paid'];
+    protected $fillable = ['cycle_id', 'bundle_id', 'user_id', 'phone_number', 'verification_code', 'note', 'is_approve', 'is_karim', 'is_paid'];
 
 
     public function user()

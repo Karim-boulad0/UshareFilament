@@ -20,7 +20,7 @@ class BundleResource extends Resource
 {
     public static function getEloquentQuery(): Builder
     {
-        if (!auth()->user()->hasRole('show-archive')) {
+        if (!auth()->user()->hasRole(["super-admin",'show-archive'])) {
             return static::getModel()::query()->where('is_active', 1);
         } else {
             return static::getModel()::query();
@@ -41,7 +41,8 @@ class BundleResource extends Resource
                         Forms\Components\TextInput::make('name')
                             ->required(),
                         Forms\Components\TextInput::make('capacity')
-                            ->required(),                        Forms\Components\TextInput::make('price')
+                            ->required(),                       
+                             Forms\Components\TextInput::make('price')
                             ->required(),
                         Toggle::make('is_active')
 
@@ -61,6 +62,11 @@ class BundleResource extends Resource
             ])
             ->filters([
                 TrashedFilter::make(),
+                Tables\Filters\Filter::make('activeBundles')
+                ->default('activeBundles')
+                ->query(fn (Builder $query): Builder => $query->where('is_active', 1)),
+                Tables\Filters\Filter::make('NotActiveBundles')
+                ->query(fn (Builder $query): Builder => $query->where('is_active', 0)),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

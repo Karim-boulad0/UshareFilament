@@ -26,7 +26,6 @@ return new class extends Migration
             $table->string('verification_code', 8)->nullable();
             $table->string('note')->nullable();
             $table->boolean('is_approve')->default(0);
-            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -3,37 +3,23 @@
 namespace App\Filament\Resources;
 
 use Carbon\Carbon;
-use Filament\Forms;
-use App\Models\User;
-
 use Filament\Tables;
-use App\Models\Cycle;
 use App\Models\Bundle;
 use App\Models\Subscription;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
-use Faker\Provider\ar_EG\Text;
-use Illuminate\Validation\Rule;
 use Filament\Resources\Resource;
-use Illuminate\Support\Facades\DB;
 use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Field;
-use Illuminate\Support\Facades\Auth;
-use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Validation\Rules\Unique;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\DeleteAction;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Columns\BooleanColumn;
-use Filament\Tables\Filters\TrashedFilter;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SubscriptionResource\Pages;
-use App\Filament\Resources\SubscriptionResource\RelationManagers;
 use App\Filament\Resources\SubscriptionResource\Widgets\StatsOverview;
 
 class SubscriptionResource extends Resource
@@ -145,7 +131,8 @@ class SubscriptionResource extends Resource
                     Tables\Filters\Filter::make('NotApprove')
                         ->query(fn (Builder $query): Builder => $query->where('is_approve', 0)->orWhere('is_approve', null)),
                     Tables\Filters\Filter::make('Approve')
-                        ->query(fn (Builder $query): Builder => $query->whereIn('is_approve', [1])), TrashedFilter::make(), TrashedFilter::make(), TrashedFilter::make(), TrashedFilter::make(), TrashedFilter::make(), TrashedFilter::make(), TrashedFilter::make(),
+                        ->query(fn (Builder $query): Builder => $query->whereIn('is_approve', [1])),
+
                 ])
                 ->actions([
                     Tables\Actions\EditAction::make(),
@@ -175,7 +162,6 @@ class SubscriptionResource extends Resource
                         ->query(fn (Builder $query): Builder => $query->where('is_approve', 0)->orWhere('is_approve', null)),
                     Tables\Filters\Filter::make('Approve')
                         ->query(fn (Builder $query): Builder => $query->whereIn('is_approve', [1])),
-                    TrashedFilter::make(),
                 ])
                 ->actions([
                     Tables\Actions\EditAction::make(),

@@ -214,11 +214,7 @@ class RolesAndPermissionsSeeder extends Seeder
             $userPermission2,
             $userPermission3,
             $userPermission4,
-            $rolePermission0,
-            $rolePermission1,
-            $rolePermission2,
-            $rolePermission3,
-            $rolePermission4,
+
             $permission0,
             $permission1,
             $permission2,
